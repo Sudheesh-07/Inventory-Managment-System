@@ -63,4 +63,15 @@
 			</table>
 		</div>
 	</div>
+<!-- dashboard.html -->
+
+<div class="row">
+    <div class="col-md-10 col-12 mx-auto mt-5">
+        <h3>Inventory Analysis</h3>
+        <p>Total Quantity: {{ analysis_data.total_quantity }}</p>
+        <p>Highest Quantity Product: {{ analysis_data.highest_quantity_product.Product }} (Quantity: {{ analysis_data.highest_quantity_product.Quantity }})</p>
+        <p>Lowest Quantity Product: {{ analysis_data.lowest_quantity_product.Product }} (Quantity: {{ analysis_data.lowest_quantity_product.Quantity }})</p>
+    </div>
+</div>
+
 {% endblock content %}

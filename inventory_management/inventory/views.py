@@ -7,9 +7,33 @@ from .forms import UserRegisterForm, InventoryItemForm
 from .models import InventoryItem, Category
 from inventory_management.settings import LOW_QUANTITY
 from django.contrib import messages
+import pandas as pd 
 
 class Index(TemplateView):
 	template_name = 'inventory/index.html'
+ 
+
+def inventory_analysis(user_id):
+    inventory_items = InventoryItem.objects.filter(user=user_id)
+
+    data = {
+        'Product': [item.name for item in inventory_items],
+        'Quantity': [item.quantity for item in inventory_items],
+    }
+    df = pd.DataFrame(data)
+
+    total_quantity = df['Quantity'].sum()
+    highest_quantity_product = df.loc[df['Quantity'].idxmax()]
+    lowest_quantity_product = df.loc[df['Quantity'].idxmin()]
+
+    analysis_data = {
+        'total_quantity': total_quantity,
+        'highest_quantity_product': highest_quantity_product,
+        'lowest_quantity_product': lowest_quantity_product,
+    }
+
+    return analysis_data
+
 
 class Dashboard(LoginRequiredMixin, View):
 	def get(self, request):
@@ -30,8 +54,9 @@ class Dashboard(LoginRequiredMixin, View):
 			user=self.request.user.id,
 			quantity__lte=LOW_QUANTITY
 		).values_list('id', flat=True)
-
-		return render(request, 'inventory/dashboard.html', {'items': items, 'low_inventory_ids': low_inventory_ids})
+  
+		analysis_data = inventory_analysis(self.request.user.id)
+		return render(request, 'inventory/dashboard.html', {'items': items, 'low_inventory_ids': low_inventory_ids,'analysis_data': analysis_data})
 
 class SignUpView(View):
 	def get(self, request):
