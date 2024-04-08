@@ -31,14 +31,14 @@ The Inventory Management System is a robust web application developed using Djan
    ```bash
    pip install django
 6. Install Pandas:
-    '''bash
+    ```bash
     pip install pandas
 7. Apply database migrations:
-    '''bash
+    ```bash
     python manage.py migrate
 ##Execution
 1. Run the development server:
-    '''bash
+    ```bash
     python manage.py runserver
 2. Access the application in your web browser at http://localhost:8000.
 3. Register for an account or log in if you already have one.
