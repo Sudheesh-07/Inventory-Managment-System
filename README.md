@@ -36,7 +36,7 @@ The Inventory Management System is a robust web application developed using Djan
 7. Apply database migrations:
     ```bash
     python manage.py migrate
-##Execution
+## Execution
 1. Run the development server:
     ```bash
     python manage.py runserver
